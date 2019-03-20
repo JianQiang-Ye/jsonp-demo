@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>yjq.com</title>
+</head>
+
+<body>
+    <div>
+        你的账户余额是：<span id="amount">&&&amount&&&</span>元
+        <button id="pay">付款</button>
+    </div>
+    <script>
+        pay.addEventListener('click', function (e) {
+            var random = parseInt(Math.random() * 100000, 10)
+            var functionName = 'yjq' + random
+            window[functionName] = function (result) {
+                if (result === 'success') {
+                    amount.innerText = amount.innerText - 1
+                    console.log('success')
+                } else {
+                    console.log('fail')
+                }
+            }
+            var script = document.createElement('script')
+            document.body.appendChild(script)
+            script.src = 'http://localhost:8001/pay?callback=' + functionName
+            script.onload = function (e) {
+                e.currentTarget.remove()
+            }
+        })
+    </script>
+</body>
+
+</html>
